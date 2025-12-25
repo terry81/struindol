@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://terry81.github.io/struindol/sitemap.xml
+

@@ -1,0 +1,13 @@
+# IDE files
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.backup.html
+
+# Log files
+*.log
+

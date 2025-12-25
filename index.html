@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Struindol - A hidden gem in the heart of Bulgaria. Discover a picturesque village with stunning nature, rich history, and a diverse international community.">
+    <meta name="keywords" content="Struindol, Bulgaria, village, nature, tourism, Bulgarian countryside, rural Bulgaria">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+    <title>Struindol Village - A Hidden Gem in Bulgaria</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background: white;
+        }
+
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .lang-switcher button {
+            border: 2px solid #2c5f2d;
+            background: white;
+            padding: 8px 15px;
+            margin: 0 5px;
+            border-radius: 15px;
+            cursor: pointer;
+            color: #2c5f2d;
+            font-weight: bold;
+        }
+
+        .lang-switcher button.active {
+            background: #2c5f2d;
+            color: white;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #2c5f2d 0%, #97c1a9 100%);
+            padding: 60px 20px 40px;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #2c5f2d;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .about-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .about-card h3 {
+            color: #2c5f2d;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+            transition: transform 0.3s;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 30px;
+            padding: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .lightbox-nav.prev { left: 20px; }
+        .lightbox-nav.next { right: 20px; }
+
+        footer {
+            background: #2c5f2d;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        /* Language switching */
+        .lang { display: none; }
+        .lang.active { display: block; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="lang-switcher">
+    <button onclick="setLang('en')" class="lang-btn active" id="btn-en">EN</button>
+    <button onclick="setLang('bg')" class="lang-btn" id="btn-bg">БГ</button>
+    <button onclick="setLang('de')" class="lang-btn" id="btn-de">DE</button>
+</div>
+
+<section class="hero">
+    <div>
+        <div class="lang active" id="hero-en">
+            <h1>Struindol</h1>
+            <p>A Hidden Gem in the Heart of Bulgaria</p>
+        </div>
+        <div class="lang" id="hero-bg">
+            <h1>Струиндол</h1>
+            <p>Скрито съкровище в сърцето на България</p>
+        </div>
+        <div class="lang" id="hero-de">
+            <h1>Struindol</h1>
+            <p>Ein Verstecktes Juwel im Herzen Bulgariens</p>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="lang active" id="about-en">
+        <h2 class="section-title">About Struindol</h2>
+        <p class="section-subtitle">Discover the beauty and tranquility of our charming Bulgarian village</p>
+    </div>
+    <div class="lang" id="about-bg">
+        <h2 class="section-title">За Струиндол</h2>
+        <p class="section-subtitle">Открийте красотата и спокойствието на нашето очарователно българско село</p>
+    </div>
+    <div class="lang" id="about-de">
+        <h2 class="section-title">Über Struindol</h2>
+        <p class="section-subtitle">Entdecken Sie die Schönheit und Ruhe unseres charmanten bulgarischen Dorfes</p>
+    </div>
+
+    <div class="about-content">
+        <div class="about-card">
+            <div class="lang active" id="card1-en">
+                <h3>History & Heritage</h3>
+                <p>Struindol is a picturesque village nestled in the Bulgarian countryside, rich with centuries of history and traditions. The village has preserved its authentic charm while welcoming visitors who seek peace and natural beauty.</p>
+            </div>
+            <div class="lang" id="card1-bg">
+                <h3>История и наследство</h3>
+                <p>Струиндол е живописно село, сгушено в българската провинция, богато на векове история и традиции. Селото е запазило своя автентичен чар, като приветства посетители, които търсят спокойствие и природна красота.</p>
+            </div>
+            <div class="lang" id="card1-de">
+                <h3>Geschichte & Erbe</h3>
+                <p>Struindol ist ein malerisches Dorf in der bulgarischen Landschaft, reich an jahrhundertealter Geschichte und Traditionen. Das Dorf hat seinen authentischen Charme bewahrt und heißt Besucher willkommen, die Ruhe und natürliche Schönheit suchen.</p>
+            </div>
+        </div>
+
+        <div class="about-card">
+            <div class="lang active" id="card2-en">
+                <h3>Nature & Landscape</h3>
+                <p>Surrounded by rolling hills, lush forests, and crystal-clear streams, Struindol offers breathtaking views and endless opportunities for hiking, bird watching, and connecting with nature.</p>
+            </div>
+            <div class="lang" id="card2-bg">
+                <h3>Природа и пейзаж</h3>
+                <p>Заобиколен от хълмове, тучни гори и кристално чисти потоци, Струиндол предлага спиращи дъха гледки и безкрайни възможности за туризъм, наблюдение на птици и общуване с природата.</p>
+            </div>
+            <div class="lang" id="card2-de">
+                <h3>Natur & Landschaft</h3>
+                <p>Umgeben von sanften Hügeln, üppigen Wäldern und kristallklaren Bächen bietet Struindol atemberaubende Ausblicke und endlose Möglichkeiten zum Wandern, Vogelbeobachten und zur Verbindung mit der Natur.</p>
+            </div>
+        </div>
+
+        <div class="about-card">
+            <div class="lang active" id="card3-en">
+                <h3>Community & Culture</h3>
+                <p>The Struindol community consists of a small but interesting group of people with different professions from Bulgaria, Germany, England and other countries. They are united by the desire to be far from the crowds and the beaten tourist paths.</p>
+            </div>
+            <div class="lang" id="card3-bg">
+                <h3>Общност и култура</h3>
+                <p>Общността на Струиндол се състои от малко, но интересни хора с различни професии от България, Германия, Англия и други държави. Обединява ги желанието да бъдат далеч от тълпите и отъпканите туристически маршрути.</p>
+            </div>
+            <div class="lang" id="card3-de">
+                <h3>Gemeinschaft & Kultur</h3>
+                <p>Die Gemeinschaft von Struindol besteht aus einer kleinen, aber interessanten Gruppe von Menschen mit verschiedenen Berufen aus Bulgarien, Deutschland, England und anderen Ländern. Sie eint der Wunsch, weit weg von den Menschenmassen und ausgetretenen Touristenpfaden zu sein.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="lang active" id="gallery-en">
+        <h2 class="section-title">Gallery</h2>
+        <p class="section-subtitle">Explore the beauty of Struindol through these captivating images</p>
+    </div>
+    <div class="lang" id="gallery-bg">
+        <h2 class="section-title">Галерия</h2>
+        <p class="section-subtitle">Разгледайте красотата на Струиндол през тези завладяващи снимки</p>
+    </div>
+    <div class="lang" id="gallery-de">
+        <h2 class="section-title">Galerie</h2>
+        <p class="section-subtitle">Erkunden Sie die Schönheit von Struindol durch diese faszinierenden Bilder</p>
+    </div>
+
+    <div class="gallery">
+        <div class="gallery-item" onclick="openLightbox(0)">
+            <img src="images/DJI_0116.jpeg" alt="Struindol">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(1)">
+            <img src="images/IMG_0218.jpeg" alt="Struindol">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(2)">
+            <img src="images/IMG_0234.jpeg" alt="Struindol">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(3)">
+            <img src="images/IMG_0244.jpeg" alt="Struindol">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(4)">
+            <img src="images/IMG_2926.jpeg" alt="Struindol">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(5)">
+            <img src="images/IMG_2932.jpeg" alt="Struindol">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(6)">
+            <img src="images/IMG_2937.jpeg" alt="Struindol">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(7)">
+            <img src="images/IMG_4276.jpeg" alt="Struindol">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(8)">
+            <img src="images/IMG_4285.jpeg" alt="Struindol">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(9)">
+            <img src="images/IMG_4287.jpeg" alt="Struindol">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(10)">
+            <img src="images/IMG_8094.jpeg" alt="Struindol">
+        </div>
+        <div class="gallery-item" onclick="openLightbox(11)">
+            <img src="images/IMG_8117.jpeg" alt="Struindol">
+        </div>
+    </div>
+</section>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close">&times;</button>
+    <button class="lightbox-nav prev" onclick="event.stopPropagation(); changeImage(-1)">&#10094;</button>
+    <img id="lightbox-img" src="" alt="">
+    <button class="lightbox-nav next" onclick="event.stopPropagation(); changeImage(1)">&#10095;</button>
+</div>
+
+<footer>
+    <div class="lang active" id="footer-en">
+        <p>&copy; 2025 Struindol Village. A beautiful place to call home. ✉️ tollodim@gmail.com</p>
+    </div>
+    <div class="lang" id="footer-bg">
+        <p>&copy; 2025 Село Струиндол. Красиво място, което да наречем дом. ✉️ tollodim@gmail.com</p>
+    </div>
+    <div class="lang" id="footer-de">
+        <p>&copy; 2025 Dorf Struindol. Ein schöner Ort zum Leben. ✉️ tollodim@gmail.com</p>
+    </div>
+</footer>
+
+<script>
+function setLang(lang) {
+    // Hide all
+    document.querySelectorAll('.lang').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+
+    // Show selected
+    document.querySelectorAll('.lang').forEach(el => {
+        if (el.id.endsWith('-' + lang)) {
+            el.classList.add('active');
+        }
+    });
+    document.getElementById('btn-' + lang).classList.add('active');
+}
+
+const images = [
+    'images/DJI_0116.jpeg',
+    'images/IMG_0218.jpeg',
+    'images/IMG_0234.jpeg',
+    'images/IMG_0244.jpeg',
+    'images/IMG_2926.jpeg',
+    'images/IMG_2932.jpeg',
+    'images/IMG_2937.jpeg',
+    'images/IMG_4276.jpeg',
+    'images/IMG_4285.jpeg',
+    'images/IMG_4287.jpeg',
+    'images/IMG_8094.jpeg',
+    'images/IMG_8117.jpeg'
+];
+
+let currentIndex = 0;
+
+function openLightbox(index) {
+    currentIndex = index;
+    document.getElementById('lightbox-img').src = images[index];
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+function changeImage(dir) {
+    currentIndex += dir;
+    if (currentIndex < 0) currentIndex = images.length - 1;
+    if (currentIndex >= images.length) currentIndex = 0;
+    document.getElementById('lightbox-img').src = images[currentIndex];
+}
+
+document.addEventListener('keydown', (e) => {
+    if (document.getElementById('lightbox').classList.contains('active')) {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') changeImage(-1);
+        if (e.key === 'ArrowRight') changeImage(1);
+    }
+});
+</script>
+
+</body>
+</html>
+
